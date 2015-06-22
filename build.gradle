@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: "org.liquibase.gradle"
+
+group 'rest'
+//version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework:spring-core:4.1.6.RELEASE'
+    compile 'org.springframework:spring-webmvc:4.1.6.RELEASE'
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+    compile 'org.springframework:spring-web:4.1.6.RELEASE'
+    compile 'postgresql:postgresql:9.1-901.jdbc4'
+    // JSON
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.3'
+    // Test dependencies
+    testCompile 'junit:junit:4.11'
+    // Logging
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    runtime 'org.slf4j:jcl-over-slf4j:1.7.5'
+    runtime 'org.slf4j:slf4j-log4j12:1.7.5'
+
+    // Google guava
+    compile 'com.google.guava:guava:18.0'
+
+    // Apache dependencies
+    compile 'com.google.guava:guava:18.0'
+
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'postgresql:postgresql:9.1-901.jdbc4'
+        classpath "gradle.plugin.org.liquibase:liquibase-gradle-plugin:1.1.0"
+    }
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'D:\\workspace\\rest-server\\src\\main\\java\\rest\\server\\db\\changelog-1.0.groovy'
+            url 'jdbc:postgresql://localhost:5432/postgres'
+            username 'postgres'
+            password 'postgres'
+        }
+    }
+}
+
+
